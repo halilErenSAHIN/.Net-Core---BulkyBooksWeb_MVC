@@ -1,5 +1,6 @@
 ﻿using BulkyBook.DataAccess.Data;
 using BulkyBook.DataAccess.Reporsitory.IRepository;
+using BulkyBook.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace BulkyBook.DataAccess.Reporsitory
     {
         private ApplicationDbContext _db;
         public ICategoryRepository Category { get; private set; }
+        public IProductRepository Product { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
-            Category = new UntiOfWork(_db);
+            Category = new CategoryRepository(_db);
+            Product = new ProductRepository(_db);
 
         }
 
