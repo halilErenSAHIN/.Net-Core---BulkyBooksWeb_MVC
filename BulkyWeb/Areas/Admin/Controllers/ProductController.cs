@@ -1,5 +1,6 @@
 ﻿using BulkyBook.DataAccess.Reporsitory.IRepository;
 using BulkyBook.Models.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -24,35 +25,45 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         //---Create Controller---Halil Eren Şahin
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+
+            ProductVM productVM = new()
             {
-                Text = u.Name,
-                Value = u.Id.ToString(),
-            });
-
-            // ViewBag.CategoryList = CategoryList; //--> Viewbag
-            ViewData["CategoryList"] = CategoryList; //-> Viewdata
-
-            return View();
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString(),
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
 
         }
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
 
-
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(productVM);
+            };
 
         }
+
+
 
         //-------Edit Controller-----Halil Eren Şahin
 
@@ -125,3 +136,4 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
     }
 }
+
