@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+   // [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -136,21 +136,21 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
          } */
 
-       /* [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Product.Remove(obj);
-            _unitOfWork.Save();
-            TempData["success"] = "Product deleted successfully";
-            return RedirectToAction("Index");
+        /* [HttpPost, ActionName("Delete")]
+         public IActionResult DeletePOST(int? id)
+         {
+             Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
+             if (obj == null)
+             {
+                 return NotFound();
+             }
+             _unitOfWork.Product.Remove(obj);
+             _unitOfWork.Save();
+             TempData["success"] = "Product deleted successfully";
+             return RedirectToAction("Index");
 
 
-        } */
+         } */
 
         #region API CALLS
         [HttpGet]
@@ -170,20 +170,17 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            string productPath = @"images\products\product-" + id;
-            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
+            // string productPath = @"images\products\product-" + id;
+            // string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            if (Directory.Exists(finalPath))
+
+            var oldImagePath =
+                Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
             {
-                string[] filePaths = Directory.GetFiles(finalPath);
-                foreach (string filePath in filePaths)
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                Directory.Delete(finalPath);
+                System.IO.File.Delete(oldImagePath);
             }
-
 
             _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
