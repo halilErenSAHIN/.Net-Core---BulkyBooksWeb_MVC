@@ -13,13 +13,13 @@
             pending = "active text-white bg-primary";
             break;
         case "inprocess":
-            pending = "active text-white bg-primary";
+            inprocess = "active text-white bg-primary";
             break;
         case "completed":
-            pending = "active text-white bg-primary";
+            completed = "active text-white bg-primary";
             break;
         case "approved":
-            pending = "active text-white bg-primary";
+            approved = "active text-white bg-primary";
             break;
         default:
             all = "active text-white bg-primary";
@@ -43,7 +43,7 @@
             <span></span>
             <ul class="list-group list-group-horizontal-sm">
                 <a style=" text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
-                <li class="list-group-item" @inprocess>In Process</li>
+                <li class="list-group-item @inprocess">In Process</li>
                 </a>
                 <a style=" text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="pending">
                 <li class="list-group-item @pending">Payment Pending</li>
