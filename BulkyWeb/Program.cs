@@ -27,6 +27,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
+builder.Services.AddDistributedMemoryCache(); // Uses a distributed cache to store session data
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make cookie HTTP only
+    options.Cookie.IsEssential = true; // Required for GDPR compliance
+});
 
 
 builder.Services.AddRazorPages();
@@ -50,7 +57,7 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey"
 app.UseRouting();
 app.UseAuthentication(); //Added
 app.UseAuthorization();
-
+app.UseSession();
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
