@@ -62,4 +62,3 @@ jobs:
           app-name: 'bulkymvc-halilerensahin'
           slot-name: 'Production'
           package: .
-          
