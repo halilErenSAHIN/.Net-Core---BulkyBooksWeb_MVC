@@ -16,3 +16,4 @@
 <p>In this projet I have created a .Net Core solution with MVC Web project. This is a model for E-Commerce Site called Bulky Book Web.</p>
 <p>On this web page you can create account, login, adding books to your buyers cart and check out. On the other side; if your'a admin you can create admin account and add books for sell out.</p>
 <p>You can check out with your master or visa credit card. But of curse this web app only for demostration. Thank you for reviewing my .Net Core Web App. :D</p>
+![Screenshot 2024-10-16 205551](https://github.com/user-attachments/assets/492e3f20-ceb5-4313-90f3-32c87db1ff0d)
